@@ -1,4 +1,4 @@
-package org.crypto.converter.currency_converter.util;
+package org.crypto.converter.currencyconverter.util;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;

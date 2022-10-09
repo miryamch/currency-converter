@@ -1,13 +1,18 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{layout}">
-    <head>
-        <title th:text="#{home.index.headline}" />
-    </head>
-    <body>
-        <div layout:fragment="content">
-            <h1 th:text="#{home.index.headline}" class="mb-4" />
-            <p th:utext="#{home.index.text}" class="mb-5" />
-        </div>
-    </body>
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="#{home.index.headline}"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1 th:text="#{home.index.headline}" class="mb-4"/>
+    <select class="form-control" id="dropDownList">
+        <option value="0" th:text="#{home.index.emptySelect}"/>
+        <option th:each="option : ${cryptocurrencies}"
+                th:value="${option}"
+                th:text="${option.displayName}"/>
+    </select>
+</div>
+</body>
 </html>

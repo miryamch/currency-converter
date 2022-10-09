@@ -1,4 +1,4 @@
-package org.crypto.converter.currency_converter;
+package org.crypto.converter.currencyconverter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

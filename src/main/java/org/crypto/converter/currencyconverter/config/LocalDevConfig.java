@@ -1,4 +1,4 @@
-package org.crypto.converter.currency_converter.config;
+package org.crypto.converter.currencyconverter.config;
 
 import java.io.File;
 import lombok.SneakyThrows;
