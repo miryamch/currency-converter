@@ -7,12 +7,33 @@
 <body>
 <div layout:fragment="content">
     <h1 th:text="#{home.index.headline}" class="mb-4"/>
-    <select class="form-control" id="dropDownList">
-        <option value="0" th:text="#{home.index.emptySelect}"/>
-        <option th:each="option : ${cryptocurrencies}"
-                th:value="${option}"
-                th:text="${option.displayName}"/>
-    </select>
+
+    <form th:action="@{/convertCurrency}" th:object="${currencyConverterModel}" method="post">
+        <div>
+            <select th:field="*{cryptoCurrency}" id="dropDownList">
+                <option value="0" th:text="#{home.index.emptySelect}"/>
+                <option th:each="cryptoCurrency : ${cryptocurrencies}"
+                        th:value="${cryptoCurrency}"
+                        th:text="${cryptoCurrency.displayName}"/>
+            </select>
+        </div>
+        <br/>
+        <div>
+            <input type="number" th:field="*{ipAddress}" th:placeholder="#{home.index.ipAddress.placeholder}"/>
+            <label th:text="#{home.index.ipAddress.label}"/>
+        </div>
+        <br/>
+        <div>
+            <input type="submit" th:value="#{home.index.submitButton}"/>
+        </div>
+        <div>
+            <label th:text="#{home.index.result.label}"/>
+            <label th:text="${currentUnitPrice}"></label>
+
+
+        </div>
+    </form>
+
 </div>
 </body>
 </html>
