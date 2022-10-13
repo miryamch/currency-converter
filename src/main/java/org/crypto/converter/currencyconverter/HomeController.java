@@ -1,7 +1,9 @@
 package org.crypto.converter.currencyconverter;
 
+import lombok.RequiredArgsConstructor;
 import org.crypto.converter.currencyconverter.domain.CryptoCurrency;
 import org.crypto.converter.currencyconverter.model.CurrencyConverterModel;
+import org.crypto.converter.currencyconverter.service.CurrencyConverterService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,7 +15,11 @@ import javax.validation.Valid;
 import java.util.EnumSet;
 
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
+
+    private final CurrencyConverterService service;
+
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("cryptocurrencies", EnumSet.allOf(CryptoCurrency.class));
@@ -26,7 +32,8 @@ public class HomeController {
         model.addAttribute("cryptocurrencies", EnumSet.allOf(CryptoCurrency.class));
         model.addAttribute("currencyConverterModel", currencyConverterModel);
         if (!bindingResult.hasErrors()) {
-            model.addAttribute("currentUnitPrice", "6,99");
+            String formattedPrice = service.getFormattedPrice(currencyConverterModel.getCryptoCurrency(), currencyConverterModel.getIpAddress());
+            model.addAttribute("currentUnitPrice", formattedPrice);
         }
         return "home/index";
     }
