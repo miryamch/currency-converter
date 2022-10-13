@@ -1,32 +1,29 @@
 package org.crypto.converter.currencyconverter.service;
 
 import org.crypto.converter.currencyconverter.domain.CryptoCurrency;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.Locale;
 
 @Service
 public class CurrencyConverterService {
 
-    public String getFormattedPrice(CryptoCurrency cryptoCurrency, @Nullable String ipAddress) {
-        BigDecimal price = getCryptoCurrencyPrice(cryptoCurrency);
-        Locale locale = getLocale(ipAddress);
-        return formatPrice(price, locale);
+    public String getFormattedPrice(CryptoCurrency cryptoCurrency, Locale locale) {
+        return formatPrice(getCryptoCurrencyPrice(cryptoCurrency), locale);
     }
 
-    private String formatPrice(BigDecimal price, Locale locale) {
-        return "6,99";
+    String formatPrice(BigDecimal value, Locale locale) {
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
+        if (value.compareTo(BigDecimal.ZERO) > 0) {
+            numberFormat.setMinimumFractionDigits(value.scale());
+        }
+        return numberFormat.format(value);
     }
 
-    private BigDecimal getCryptoCurrencyPrice(CryptoCurrency cryptoCurrency) {
-
-        return BigDecimal.ZERO;
+    BigDecimal getCryptoCurrencyPrice(CryptoCurrency cryptoCurrency) {
+        return cryptoCurrency.getDecimalValue();
     }
 
-    private Locale getLocale(@Nullable String ipAddress) {
-
-        return null;
-    }
 }
