@@ -11,16 +11,18 @@
     <form th:action="@{/convertCurrency}" th:object="${currencyConverterModel}" method="post">
         <div>
             <select th:field="*{cryptoCurrency}" id="dropDownList">
-                <option value="0" th:text="#{home.index.emptySelect}"/>
+                <option value="" th:text="#{home.index.emptySelect}"/>
                 <option th:each="cryptoCurrency : ${cryptocurrencies}"
                         th:value="${cryptoCurrency}"
                         th:text="${cryptoCurrency.displayName}"/>
             </select>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('cryptoCurrency')}" th:errors="*{cryptoCurrency}"></div>
         </div>
         <br/>
         <div>
-            <input type="number" th:field="*{ipAddress}" th:placeholder="#{home.index.ipAddress.placeholder}"/>
+            <input type="text" th:field="*{ipAddress}" th:placeholder="#{home.index.ipAddress.placeholder}"/>
             <label th:text="#{home.index.ipAddress.label}"/>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('ipAddress')}" th:errors="*{ipAddress}"></div>
         </div>
         <br/>
         <div>
@@ -28,7 +30,7 @@
         </div>
         <div>
             <label th:text="#{home.index.result.label}"/>
-            <label th:text="${currentUnitPrice}"></label>
+            <label th:text="${currentUnitPrice == null ? '-' : currentUnitPrice}"></label>
 
 
         </div>

@@ -18,15 +18,16 @@ public class HomeController {
     public String index(Model model) {
         model.addAttribute("cryptocurrencies", EnumSet.allOf(CryptoCurrency.class));
         model.addAttribute("currencyConverterModel", new CurrencyConverterModel());
-        model.addAttribute("currentUnitPrice", "???");
         return "home/index";
     }
 
     @PostMapping("/convertCurrency")
-    public String convertCurrency(Model model, @ModelAttribute @Valid CurrencyConverterModel currencyConverterModel, BindingResult bindingResult) {
+    public String convertCurrency(@ModelAttribute("currencyConverterModel") @Valid CurrencyConverterModel currencyConverterModel, BindingResult bindingResult, Model model) {
         model.addAttribute("cryptocurrencies", EnumSet.allOf(CryptoCurrency.class));
         model.addAttribute("currencyConverterModel", currencyConverterModel);
-        model.addAttribute("currentUnitPrice", "6,99");
+        if (!bindingResult.hasErrors()) {
+            model.addAttribute("currentUnitPrice", "6,99");
+        }
         return "home/index";
     }
 
