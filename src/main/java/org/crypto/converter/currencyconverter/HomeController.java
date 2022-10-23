@@ -40,13 +40,15 @@ public class HomeController {
         if (!bindingResult.hasErrors()) {
             Locale locale;
             String ipAddress = currencyConverterModel.getIpAddress();
+            CryptoCurrency cryptoCurrency = currencyConverterModel.getCryptoCurrency();
+            log.debug("Requested currency {} for IP {}", cryptoCurrency, ipAddress);
             if (ipAddress != null) {
                 locale = geolocationService.getLocaleByIp(ipAddress);
             } else {
                 locale = request.getLocale();
             }
 
-            String formattedPrice = currencyConverterService.getFormattedPrice(currencyConverterModel.getCryptoCurrency(), locale);
+            String formattedPrice = currencyConverterService.getFormattedPrice(cryptoCurrency, locale);
             model.addAttribute("currentUnitPrice", formattedPrice);
         }
         return "home/index";
