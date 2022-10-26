@@ -10,10 +10,10 @@
 
     <form th:action="@{/convertCurrency}" th:object="${currencyConverterModel}" method="post">
         <div>
-            <select th:field="*{cryptoCurrency}" id="dropDownList">
+            <select th:field="*{cryptoCurrency.currencyCode}" id="dropDownList">
                 <option value="" th:text="#{home.index.emptySelect}"/>
                 <option th:each="cryptoCurrency : ${cryptocurrencies}"
-                        th:value="${cryptoCurrency}"
+                        th:value="${cryptoCurrency.currencyCode}"
                         th:text="${cryptoCurrency.displayName}"/>
             </select>
             <div class="alert alert-warning" th:if="${#fields.hasErrors('cryptoCurrency')}" th:errors="*{cryptoCurrency}"></div>

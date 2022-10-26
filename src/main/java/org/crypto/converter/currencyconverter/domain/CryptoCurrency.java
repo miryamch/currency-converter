@@ -1,21 +1,40 @@
 package org.crypto.converter.currencyconverter.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
+@Entity
+@Table(name = "cryptocurrency")
+@NoArgsConstructor
 @Getter
-public enum CryptoCurrency {
-    BTC("Bitcoin", BigDecimal.valueOf(1960681, 2)),
-    ETH("Ethereum", BigDecimal.valueOf(129988, 2)),
-    USDT("Tether", BigDecimal.valueOf(102, 2)),
-    BNB("BNP", BigDecimal.valueOf(269, 8));
+public class CryptoCurrency {
 
-    private final String displayName;
-    private final BigDecimal decimalValue;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    CryptoCurrency(String s, BigDecimal d) {
-        displayName = s;
-        decimalValue = d;
+    @Column(name = "currency_code")
+    private String currencyCode;
+
+    @Column(name = "display_name")
+    private String displayName;
+
+    @Column(name = "unscaled_value")
+    private Integer unscaledValue;
+
+    private Integer scale;
+
+    public CryptoCurrency(String currencyCode, String displayName, Integer unscaledValue, Integer scale) {
+        this.currencyCode = currencyCode;
+        this.displayName = displayName;
+        this.unscaledValue = unscaledValue;
+        this.scale = scale;
+    }
+
+    public BigDecimal getDecimalValue() {
+        return BigDecimal.valueOf(unscaledValue, scale);
     }
 }

@@ -1,9 +1,13 @@
 package org.crypto.converter.currencyconverter.service;
 
-import org.crypto.converter.currencyconverter.domain.CryptoCurrency;
+import org.crypto.converter.currencyconverter.domain.CryptoCurrencyRepository;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.Locale;
@@ -11,25 +15,14 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ExtendWith(MockitoExtension.class)
 class CurrencyConverterServiceTest {
 
-    CurrencyConverterService service = new CurrencyConverterService();
+    @Mock
+    CryptoCurrencyRepository repository;
 
-    static Stream<Arguments> cryptoCurrencyProvider() {
-        return Stream.of(
-                Arguments.arguments(CryptoCurrency.BTC, new BigDecimal("19606.81")),
-                Arguments.arguments(CryptoCurrency.ETH, new BigDecimal("1299.88")),
-                Arguments.arguments(CryptoCurrency.USDT, new BigDecimal("1.02")),
-                Arguments.arguments(CryptoCurrency.BNB, new BigDecimal("0.00000269"))
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("cryptoCurrencyProvider")
-    void testGetPriceForCryptoCurrency(CryptoCurrency cryptoCurrency, BigDecimal expected) {
-        var actual = service.getCryptoCurrencyPrice(cryptoCurrency);
-        assertThat(actual).isEqualTo(expected);
-    }
+    @InjectMocks
+    CurrencyConverterService service;
 
     static Stream<Arguments> formatPriceProvider() {
         return Stream.of(
