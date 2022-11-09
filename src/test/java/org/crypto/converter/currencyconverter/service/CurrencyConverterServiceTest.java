@@ -24,6 +24,7 @@ class CurrencyConverterServiceTest {
     @InjectMocks
     CurrencyConverterService service;
 
+
     static Stream<Arguments> formatPriceProvider() {
         return Stream.of(
                 Arguments.arguments(BigDecimal.valueOf(123456789, 2), new Locale("en", "US"), "$1,234,567.89"),

@@ -30,7 +30,7 @@ public class CurrencyConverterService {
         return numberFormat.format(value);
     }
 
-    BigDecimal getCryptoCurrencyPrice(CryptoCurrency cryptoCurrency) {
+    private BigDecimal getCryptoCurrencyPrice(CryptoCurrency cryptoCurrency) {
         return cryptoCurrency.getDecimalValue();
     }
 
