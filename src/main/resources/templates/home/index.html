@@ -16,7 +16,7 @@
                         th:value="${cryptoCurrency.currencyCode}"
                         th:text="${cryptoCurrency.displayName}"/>
             </select>
-            <div class="alert alert-warning" th:if="${#fields.hasErrors('cryptoCurrency')}" th:errors="*{cryptoCurrency}"></div>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('cryptoCurrency.currencyCode')}" th:errors="*{cryptoCurrency.currencyCode}"></div>
         </div>
         <br/>
         <div>

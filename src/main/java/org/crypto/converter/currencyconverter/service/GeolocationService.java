@@ -1,10 +1,11 @@
 package org.crypto.converter.currencyconverter.service;
 
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.crypto.converter.currencyconverter.domain.CountryLocale;
 import org.crypto.converter.currencyconverter.domain.CountryLocaleRepository;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -21,7 +22,7 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class GeolocationService {
 
     public static final Locale DEFAULT_LOCALE = new Locale("en", "US");
@@ -29,7 +30,14 @@ public class GeolocationService {
 
     HttpClient httpClient = HttpClient.newHttpClient();
 
-    private final CountryLocaleRepository repository;
+    @Autowired
+    private CountryLocaleRepository repository;
+
+    //This constructor is needed for tests
+    public GeolocationService(HttpClient httpClient, CountryLocaleRepository repository) {
+        this.httpClient = httpClient;
+        this.repository = repository;
+    }
 
     public Locale getLocaleByIp(String ipAddress) {
         try {
